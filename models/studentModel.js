@@ -20,9 +20,15 @@ const studentModel = new mongoose.Schema(
       minlength: [6, "password must be at least 6 characters"],
       // match: []
     },
+    resetPasswordToken: {
+      type: String,
+      default: "0"
+    },
   },
   { timestamps: true }
 );
+
+
 
 //password decrypt
 studentModel.pre("save", function () {
