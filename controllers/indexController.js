@@ -71,3 +71,11 @@ exports.studentforgetlink = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({ messag: "password has been successfully changed" });
 });
+
+exports.studentresetpassword = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.password = req.body.password;
+  await student.save();
+
+  sendtoken(student, 201, res);
+});
