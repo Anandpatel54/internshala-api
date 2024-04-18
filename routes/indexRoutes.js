@@ -9,6 +9,8 @@ const {
   studentsendmail,
   studentforgetlink,
   studentresetpassword,
+  studentupdate,
+  studentavatar,
 } = require("../controllers/indexController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -34,10 +36,12 @@ router.post("/student/send-mail", studentsendmail);
 router.get("/student/forget-link/:id", studentforgetlink);
 
 //POST/student/reset-password/:studentid
-router.post(
-  "/student/reset-password/:id",
-  isAuthenticated,
-  studentresetpassword
-);
+router.post("/student/reset-password/:id", isAuthenticated, studentresetpassword);
+
+//POST /student/update/:studentid routes
+router.post("/student/update/:id", isAuthenticated, studentupdate);
+
+//POST /student/avatar/:studentid routes
+router.post("/student/avatar/:id", isAuthenticated, studentavatar);
 
 module.exports = router;

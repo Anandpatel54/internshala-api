@@ -3,6 +3,9 @@ const Student = require("../models/studentModel");
 const ErorrHandler = require("../utils/ErrorHandler");
 const { sendtoken } = require("../utils/sendToken");
 const { sendmail } = require("../utils/nodemailer");
+const path = require("path");
+const { userInfo } = require("os");
+const imagekit = require("../utils/imagekit").initImageeKit();
 
 exports.homepage = catchAsyncErrors(async (req, res, next) => {
   res.json({ message: "Secure Homepage!" });
@@ -78,4 +81,35 @@ exports.studentresetpassword = catchAsyncErrors(async (req, res, next) => {
   await student.save();
 
   sendtoken(student, 201, res);
+});
+
+exports.studentupdate = catchAsyncErrors(async (req, res, next) => {
+  await Student.findByIdAndUpdate(req.params.id, req.body).exec();
+  res.status(200).json({
+    success: true,
+    message: "student updated successfully!",
+  });
+});
+
+exports.studentavatar = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.params.id).exec();
+  const file = req.files.avatar;
+  const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(
+    file.name
+  )}`;
+  if(student.avatar.fileId !== ""){
+    await imagekit.deleteFile(student.avatar.fileId)
+  }
+
+
+  const { fileId, url } = await imagekit.upload({
+    file: file.data,
+    fileName: modifiedFileName,
+  });
+  student.avatar = { fileId, url };
+  await student.save();
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully!",
+  });
 });
