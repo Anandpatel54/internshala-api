@@ -30,16 +30,16 @@ exports.editeducation = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.deleteeducation = catchAsyncErrors(async (req, res, next) => {
-    const student = await Student.findById(req.id).exec();
-    const filterededu = student.resume.education.filter(
-      (i) => i.id !== req.params.eduid
-    );
-    student.resume.education = filterededu
-    await student.save();
-    res.json({ message: "Education deleted!" });
-  });
+  const student = await Student.findById(req.id).exec();
+  const filterededu = student.resume.education.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.education = filterededu;
+  await student.save();
+  res.json({ message: "Education deleted!" });
+});
 
-  //---------------jobs---------------------
+//---------------jobs---------------------
 
 exports.addjob = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
@@ -50,11 +50,11 @@ exports.addjob = catchAsyncErrors(async (req, res, next) => {
 
 exports.editjob = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
-  const eduIndex = student.resume.jobs.findIndex(
+  const jobIndex = student.resume.jobs.findIndex(
     (i) => i.id === req.params.eduid
   );
-  student.resume.jobs[eduIndex] = {
-    ...student.resume.jobs[eduIndex],
+  student.resume.jobs[jobIndex] = {
+    ...student.resume.jobs[jobIndex],
     ...req.body,
   };
   await student.save();
@@ -62,43 +62,75 @@ exports.editjob = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.deletejob = catchAsyncErrors(async (req, res, next) => {
-    const student = await Student.findById(req.id).exec();
-    const filterededu = student.resume.jobs.filter(
-      (i) => i.id !== req.params.eduid
-    );
-    student.resume.jobs = filterededu
-    await student.save();
-    res.json({ message: "job deleted!" });
-  });
+  const student = await Student.findById(req.id).exec();
+  const filteredjob = student.resume.jobs.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.jobs = filteredjob;
+  await student.save();
+  res.json({ message: "job deleted!" });
+});
 
-  //---------------internship---------------------------
+//---------------internship---------------------------
 
-  exports.addinternship = catchAsyncErrors(async (req, res, next) => {
-    const student = await Student.findById(req.id).exec();
-    student.resume.internship.push({ ...req.body, id: uuidv4() });
-    await student.save();
-    res.json({ message: "internship Added!" });
-  });
-  
-  exports.editinternship = catchAsyncErrors(async (req, res, next) => {
-    const student = await Student.findById(req.id).exec();
-    const eduIndex = student.resume.internship.findIndex(
-      (i) => i.id === req.params.eduid
-    );
-    student.resume.internship[eduIndex] = {
-      ...student.resume.internship[eduIndex],
-      ...req.body,
-    };
-    await student.save();
-    res.json({ message: "internship updated!" });
-  });
-  
-  exports.deleteinternship = catchAsyncErrors(async (req, res, next) => {
-      const student = await Student.findById(req.id).exec();
-      const filterededu = student.resume.internship.filter(
-        (i) => i.id !== req.params.eduid
-      );
-      student.resume.internship = filterededu
-      await student.save();
-      res.json({ message: "internship deleted!" });
-    });
+exports.addinternship = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.resume.internship.push({ ...req.body, id: uuidv4() });
+  await student.save();
+  res.json({ message: "internship Added!" });
+});
+
+exports.editinternship = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const interIndex = student.resume.internship.findIndex(
+    (i) => i.id === req.params.eduid
+  );
+  student.resume.internship[interIndex] = {
+    ...student.resume.internship[interIndex],
+    ...req.body,
+  };
+  await student.save();
+  res.json({ message: "internship updated!" });
+});
+
+exports.deleteinternship = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const filteredinter = student.resume.internship.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.internship = filteredinter;
+  await student.save();
+  res.json({ message: "internship deleted!" });
+});
+
+//----------------------responsibilities--------------------
+
+exports.addresponsibilities = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.resume.responsibilities.push({ ...req.body, id: uuidv4() });
+  await student.save();
+  res.json({ message: "responsibilities Added!" });
+});
+
+exports.editresponsibilities = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const respIndex = student.resume.responsibilities.findIndex(
+    (i) => i.id === req.params.eduid
+  );
+  student.resume.responsibilities[respIndex] = {
+    ...student.resume.responsibilities[respIndex],
+    ...req.body,
+  };
+  await student.save();
+  res.json({ message: "responsibilities updated!" });
+});
+
+exports.deleteresponsibilities = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const filteredresp = student.resume.responsibilities.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.responsibilities = filteredresp;
+  await student.save();
+  res.json({ message: "responsibilities deleted!" });
+});

@@ -11,6 +11,9 @@ const {
   addinternship,
   editinternship,
   deleteinternship,
+  addresponsibilities,
+  editresponsibilities,
+  deleteresponsibilities,
 } = require("../controllers/resumeController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -37,9 +40,9 @@ router.post("/edit-job/:eduid", isAuthenticated, editjob);
 //POST
 router.post("/delete-job/:eduid", isAuthenticated, deletejob);
 
-  //---------------internship---------------------------
+//---------------internship---------------------------
 
-  //POST
+//POST
 router.post("/add-internship", isAuthenticated, addinternship);
 
 //POST
@@ -48,6 +51,15 @@ router.post("/edit-internship/:eduid", isAuthenticated, editinternship);
 //POST
 router.post("/delete-internship/:eduid", isAuthenticated, deleteinternship);
 
+//----------responsibilities----------------------
 
+//POST
+router.post("/add-responsibilities", isAuthenticated, addresponsibilities);
+
+//POST
+router.post("/edit-responsibilities/:eduid",isAuthenticated, editresponsibilities);
+
+//POST
+router.post("/delete-responsibilities/:eduid",isAuthenticated, deleteresponsibilities);
 
 module.exports = router;
