@@ -134,3 +134,36 @@ exports.deleteresponsibilities = catchAsyncErrors(async (req, res, next) => {
   await student.save();
   res.json({ message: "responsibilities deleted!" });
 });
+
+//---------------courses----------------------
+
+exports.addcourses = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.resume.courses.push({ ...req.body, id: uuidv4() });
+  await student.save();
+  res.json({ message: "courses Added!" });
+
+});
+
+exports.editcourses = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const courIndex = student.resume.courses.findIndex(
+    (i) => i.id === req.params.eduid
+  );
+  student.resume.courses[courIndex] = {
+    ...student.resume.courses[courIndex],
+    ...req.body,
+  };
+  await student.save();
+  res.json({ message: "courses updated!" });
+});
+
+exports.deletecourses = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const filteredcour = student.resume.courses.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.courses = filteredcour;
+  await student.save();
+  res.json({ message: "courses deleted!" });
+});
