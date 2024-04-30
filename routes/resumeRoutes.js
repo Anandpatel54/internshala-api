@@ -20,6 +20,13 @@ const {
   addprojects,
   editprojects,
   deleteprojects,
+  addskills,
+  editskills,
+  deleteskills,
+  addaccomplishments,
+  editaccomplishments,
+  deleteaccomplishments,
+
 } = require("../controllers/resumeController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -27,7 +34,7 @@ const { isAuthenticated } = require("../middlewares/auth");
 router.get("/", isAuthenticated, resume);
 
 //POST/
-router.post("/add-adu", isAuthenticated, addeducation);
+router.post("/add-edu", isAuthenticated, addeducation);
 
 //POST
 router.post("/edit-edu/:eduid", isAuthenticated, editeducation);
@@ -87,5 +94,25 @@ router.post("/edit-projects/:eduid", isAuthenticated, editprojects);
 
 //POST
 router.post("/delete-projects/:eduid", isAuthenticated, deleteprojects);
+
+//------------------skills--------------------
+
+router.post("/add-skills", isAuthenticated, addskills);
+
+//POST
+router.post("/edit-skills/:eduid", isAuthenticated, editskills);
+
+//POST
+router.post("/delete-skills/:eduid", isAuthenticated, deleteskills);
+
+//----------------accomplishments------------------
+
+router.post("/add-accomplishments", isAuthenticated, addaccomplishments);
+
+//POST
+router.post("/edit-accomplishments/:eduid", isAuthenticated, editaccomplishments);
+
+//POST
+router.post("/delete-accomplishments/:eduid", isAuthenticated, deleteaccomplishments);
 
 module.exports = router;

@@ -51,24 +51,24 @@ exports.addjob = catchAsyncErrors(async (req, res, next) => {
 exports.editjob = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const jobIndex = student.resume.jobs.findIndex(
-    (i) => i.id === req.params.jobid
+    (i) => i.id === req.params.eduid
   );
   student.resume.jobs[jobIndex] = {
     ...student.resume.jobs[jobIndex],
     ...req.body,
   };
   await student.save();
-  res.json({ message: "job updated!" });
+  res.json({ message: "jobs updated!" });
 });
 
 exports.deletejob = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
-  const filteredjob = student.resume.jobs.filter(
-    (i) => i.id !== req.params.jobid
+  const filterededu = student.resume.jobs.filter(
+    (i) => i.id !== req.params.eduid
   );
-  student.resume.jobs = filteredjob;
+  student.resume.jobs = filterededu;
   await student.save();
-  res.json({ message: "job deleted!" });
+  res.json({ message: "jobs deleted!" });
 });
 
 //---------------internship---------------------------
@@ -83,7 +83,7 @@ exports.addinternship = catchAsyncErrors(async (req, res, next) => {
 exports.editinternship = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const interIndex = student.resume.internship.findIndex(
-    (i) => i.id === req.params.interid
+    (i) => i.id === req.params.eduid
   );
   student.resume.internship[interIndex] = {
     ...student.resume.internship[interIndex],
@@ -96,7 +96,7 @@ exports.editinternship = catchAsyncErrors(async (req, res, next) => {
 exports.deleteinternship = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const filteredinter = student.resume.internship.filter(
-    (i) => i.id !== req.params.interid
+    (i) => i.id !== req.params.eduid
   );
   student.resume.internship = filteredinter;
   await student.save();
@@ -115,7 +115,7 @@ exports.addresponsibilities = catchAsyncErrors(async (req, res, next) => {
 exports.editresponsibilities = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const respIndex = student.resume.responsibilities.findIndex(
-    (i) => i.id === req.params.respid
+    (i) => i.id === req.params.eduid
   );
   student.resume.responsibilities[respIndex] = {
     ...student.resume.responsibilities[respIndex],
@@ -128,7 +128,7 @@ exports.editresponsibilities = catchAsyncErrors(async (req, res, next) => {
 exports.deleteresponsibilities = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const filteredresp = student.resume.responsibilities.filter(
-    (i) => i.id !== req.params.respid
+    (i) => i.id !== req.params.eduid
   );
   student.resume.responsibilities = filteredresp;
   await student.save();
@@ -147,7 +147,7 @@ exports.addcourses = catchAsyncErrors(async (req, res, next) => {
 exports.editcourses = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const courIndex = student.resume.courses.findIndex(
-    (i) => i.id === req.params.courid
+    (i) => i.id === req.params.eduid
   );
   student.resume.courses[courIndex] = {
     ...student.resume.courses[courIndex],
@@ -160,7 +160,7 @@ exports.editcourses = catchAsyncErrors(async (req, res, next) => {
 exports.deletecourses = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const filteredcour = student.resume.courses.filter(
-    (i) => i.id !== req.params.courid
+    (i) => i.id !== req.params.eduid
   );
   student.resume.courses = filteredcour;
   await student.save();
@@ -179,7 +179,7 @@ exports.addprojects = catchAsyncErrors(async (req, res, next) => {
 exports.editprojects = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const projIndex = student.resume.projects.findIndex(
-    (i) => i.id !== req.params.projid
+    (i) => i.id !== req.params.eduid
   );
   student.resume.projects[projIndex] = {
     ...student.resume.projects[projIndex],
@@ -192,9 +192,73 @@ exports.editprojects = catchAsyncErrors(async (req, res, next) => {
 exports.deleteprojects = catchAsyncErrors(async (req, res, next) => {
   const student = await Student.findById(req.id).exec();
   const filteredproj = student.resume.projects.filter(
-    (i) => i.id !== req.params.projid
+    (i) => i.id !== req.params.eduid
   );
   student.resume.projects = filteredproj;
   await student.save();
   res.json({ message: "projects deleted!" });
+});
+
+//---------------skills----------------------
+
+exports.addskills = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.resume.skills.push({ ...req.body, id: uuidv4() });
+  await student.save();
+  res.json({ message: "skills Added!" });
+});
+
+exports.editskills = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const skillIndex = student.resume.skills.findIndex(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.skills[skillIndex] = {
+    ...student.resume.skills[skillIndex],
+    ...req.body,
+  };
+  await student.save();
+  res.json({ message: "skills updated!" });
+});
+
+exports.deleteskills = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const filteredskill = student.resume.skills.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.skills = filteredskill;
+  await student.save();
+  res.json({ message: "skills deleted!" });
+});
+
+//---------------accomplishments-----------------
+
+exports.addaccomplishments = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  student.resume.accomplishments.push({ ...req.body, id: uuidv4() });
+  await student.save();
+  res.json({ message: "accomplishments Added!" });
+});
+
+exports.editaccomplishments = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const accompIndex = student.resume.accomplishments.findIndex(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.accomplishments[accompIndex] = {
+    ...student.resume.accomplishments[accompIndex],
+    ...req.body,
+  };
+  await student.save();
+  res.json({ message: "accomplishments updated!" });
+});
+
+exports.deleteaccomplishments = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.id).exec();
+  const filteredaccomp = student.resume.accomplishments.filter(
+    (i) => i.id !== req.params.eduid
+  );
+  student.resume.accomplishments = filteredaccomp;
+  await student.save();
+  res.json({ message: "accomplishments deleted!" });
 });
