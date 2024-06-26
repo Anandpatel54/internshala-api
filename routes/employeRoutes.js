@@ -3,14 +3,14 @@ const router = express.Router();
 const {
   homepage,
   currentUser,
-  Employesignup,
-  Employesignin,
-  Employesignout,
-  Employesendmail,
-  Employeforgetlink,
-  Employeresetpassword,
-  Employeupdate,
-  Employeavatar,
+  employesignup,
+  employesignin,
+  employesignout,
+  employesendmail,
+  employeforgetlink,
+  employeresetpassword,
+  employeupdate,
+  employeavatar,
 } = require("../controllers/employeController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -18,30 +18,30 @@ const { isAuthenticated } = require("../middlewares/auth");
 router.get("/", homepage);
 
 //POST/Employe
-router.post("/Employe", isAuthenticated, currentUser);
+router.post("/", isAuthenticated, currentUser);
 
 //POST /Employe/signup routes
-router.post("/Employe/signup", Employesignup);
+router.post("/signup", employesignup);
 
 //POST /Employe/signin routes
-router.post("/Employe/signin", Employesignin);
+router.post("/signin", employesignin);
 
 //GET /Employe/signout routes
-router.get("/Employe/signout", isAuthenticated, Employesignout);
+router.get("/signout", isAuthenticated, employesignout);
 
 //POST /Employe/send-mail routes
-router.post("/Employe/send-mail", Employesendmail);
+router.post("/send-mail", employesendmail);
 
 //GET/Employe/forget-link/:Employeid
-router.get("/Employe/forget-link/:id", Employeforgetlink);
+router.get("/forget-link/:id", employeforgetlink);
 
 //POST/Employe/reset-password/:Employeid
-router.post("/Employe/reset-password/:id", isAuthenticated, Employeresetpassword);
+router.post("/reset-password/:id", isAuthenticated, employeresetpassword);
 
 //POST /Employe/update/:Employeid routes
-router.post("/Employe/update/:id", isAuthenticated, Employeupdate);
+router.post("/update/:id", isAuthenticated, employeupdate);
 
 //POST /Employe/avatar/:Employeid routes
-router.post("/Employe/avatar/:id", isAuthenticated, Employeavatar);
+router.post("/avatar/:id", isAuthenticated, employeavatar);
 
 module.exports = router;
