@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   homepage,
-  currentUser,
+  currentEmpploye,
   employesignup,
   employesignin,
   employesignout,
@@ -17,8 +17,8 @@ const { isAuthenticated } = require("../middlewares/auth");
 //get/
 router.get("/", homepage);
 
-//POST/Employe
-router.post("/", isAuthenticated, currentUser);
+//POST/currentEmpploye
+router.post("/", isAuthenticated, currentEmpploye);
 
 //POST /Employe/signup routes
 router.post("/signup", employesignup);

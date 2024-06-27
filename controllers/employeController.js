@@ -11,7 +11,7 @@ exports.homepage = catchAsyncErrors(async (req, res, next) => {
   res.json({ message: "Secure employe Homepage!" });
 });
 
-exports.currentUser = catchAsyncErrors(async (req, res, next) => {
+exports.currentEmpploye = catchAsyncErrors(async (req, res, next) => {
   const employe = await Employe.findById(req.id).exec();
   res.json({ employe });
 });
