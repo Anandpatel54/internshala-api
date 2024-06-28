@@ -93,12 +93,12 @@ exports.employeupdate = catchAsyncErrors(async (req, res, next) => {
 
 exports.employeavatar = catchAsyncErrors(async (req, res, next) => {
   const employe = await Employe.findById(req.params.id).exec();
-  const file = req.files.avatar;
+  const file = req.files.organizationlogo;
   const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(
     file.name
   )}`;
-  if(employe.avatar.fileId !== ""){
-    await imagekit.deleteFile(Employe.avatar.fileId)
+  if(employe.organizationlogo.fileId !== ""){
+    await imagekit.deleteFile(employe.organizationlogo.fileId)
   }
 
 
@@ -106,7 +106,7 @@ exports.employeavatar = catchAsyncErrors(async (req, res, next) => {
     file: file.data,
     fileName: modifiedFileName,
   });
-  employe.avatar = { fileId, url };
+  employe.organizationlogo = { fileId, url };
   await employe.save();
   res.status(200).json({
     success: true,

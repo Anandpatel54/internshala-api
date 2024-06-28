@@ -14,14 +14,12 @@ const employeModel = new mongoose.Schema(
       required: [true, "Last name is required"],
       minlength: [5, "Last Name should be at least 5 characters"],
     },
-
     contact: {
       type: String,
       required: [true, "Contact is required"],
       maxlength: [10, "Contact must not exceed 10 characters"],
       minlength: [10, "Contact must be at least 10 characters"],
     },
-
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -33,10 +31,9 @@ const employeModel = new mongoose.Schema(
     },
     password: {
       type: String,
-      select: false,
-      maxlength: [15, "password must be at least 15 characters"],
-      minlength: [6, "password must be at least 6 characters"],
-      // match: []
+      select: false, // Ensure password is not returned in queries by default
+      minlength: [6, "Password must be at least 6 characters"],
+      maxlength: [15, "Password must not exceed 15 characters"],
     },
     resetPasswordToken: {
       type: String,
@@ -44,15 +41,19 @@ const employeModel = new mongoose.Schema(
     },
     organizationname: {
       type: String,
-      required: [true, "Orgination Name is required"],
-      minlength: [7, "Orgination Name should be at least 7 characters"],
+      required: [true, "Organization Name is required"],
+      minlength: [7, "Organization Name should be at least 7 characters"],
     },
     organizationlogo: {
-      type: Object,
-      default: {
-        filed: "",
-        url: "https://images.unsplash.com/photo-1622396636133-ba43f812bc35?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      type: {
+        fileId: { type: String, default: "" },
+        url: {
+          type: String,
+          default:
+            "https://images.unsplash.com/photo-1622396636133-ba43f812bc35?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
       },
+      default: {},
     },
     internship: [{ type: mongoose.Schema.Types.ObjectId, ref: "internship" }],
     jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "jobs" }],
